@@ -1,19 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+import { Provider } from "react-redux";
+import { AppLoading } from "expo";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import * as Font from "expo-font";
+import store from "./redux/store";
+import AppNavigator from "./navigation/AppNavigator";
+
+const fetchFonts = () => {
+    return Font.loadAsync({
+        "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+        "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+    });
+};
+
+const App = () => {
+    const [fontLoaded, setFontLoaded] = useState(false);
+
+    if (!fontLoaded) {
+        return (
+            <AppLoading
+                startAsync={fetchFonts}
+                onFinish={() => {
+                    setFontLoaded(true);
+                }}
+            />
+        );
+    }
+
+    return (
+        <Provider store={store}>
+            <AppNavigator />
+        </Provider>
+    );
+};
+
+export default App;
