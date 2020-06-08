@@ -72,4 +72,4 @@ Build it using the following command:
 -   Run the Application:
     `npm start`
 
-Feel free to create issues if you find any bug!!
+Feel free to create issue if you find any bug!!
